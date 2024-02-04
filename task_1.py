@@ -22,13 +22,18 @@ class Connect:
         self.params = {}
 
     def get_response(self):
-        return requests.get(self.url, headers=self.headers, params=self.params)
+        response = requests.get(self.url, headers=self.headers, params=self.params)
+        response.encoding = 'UTF-8'
+        return response
 
     def get_soup(self):
         return BeautifulSoup(self.get_response().text, 'html.parser')
 
 
-connect = Connect(URL)
-soup = connect.get_soup()
-links_page = [f"https://parsinger.ru/html/{link['href']}" for link in soup.find('div', class_='pagen').find_all('a')]
-print(links_page)
+links_page = [f"https://parsinger.ru/html/{link['href']}" for link in
+              Connect(URL).get_soup().find('div', class_='pagen').find_all('a')]
+
+for page_link in links_page:
+    item = Connect(page_link).get_soup().find_all('div', class_='img_box')
+    mouse_names = [name.find('a', class_='name_item').text for name in item]
+    print(mouse_names)
