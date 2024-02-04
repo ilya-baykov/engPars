@@ -32,8 +32,10 @@ class Connect:
 
 links_page = [f"https://parsinger.ru/html/{link['href']}" for link in
               Connect(URL).get_soup().find('div', class_='pagen').find_all('a')]
-
+mouse_names = {}
 for page_link in links_page:
     item = Connect(page_link).get_soup().find_all('div', class_='img_box')
-    mouse_names = [name.find('a', class_='name_item').text for name in item]
-    print(mouse_names)
+    mouses = [name.find('a', class_='name_item').text for name in item]
+    mouse_names.setdefault(page_link, mouses)
+
+print(mouse_names)
