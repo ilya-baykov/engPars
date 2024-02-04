@@ -38,4 +38,9 @@ for page_link in links_page:
     mouses = [name.find('a', class_='name_item').text for name in item]
     mouse_names.setdefault(page_link, mouses)
 
-print(mouse_names)
+with open("mouse_names", "w") as file:
+    for link, mouses in mouse_names.items():
+        file.write(link + "\n")
+        for count, mouse in enumerate(mouses):
+            file.write(f'{count + 1})' + "\t" + mouse + "\n")
+        file.write('\n\n')
