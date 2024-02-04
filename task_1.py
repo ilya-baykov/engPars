@@ -29,5 +29,6 @@ class Connect:
 
 
 connect = Connect(URL)
-
-print(connect.get_soup())
+soup = connect.get_soup()
+links_page = [f"https://parsinger.ru/html/{link['href']}" for link in soup.find('div', class_='pagen').find_all('a')]
+print(links_page)
