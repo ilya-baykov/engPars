@@ -1,4 +1,5 @@
 from task_1 import Connect
+import re
 
 """
     1) Необходимо просмотреть все товары
@@ -24,3 +25,10 @@ for link in all_links:
     all_goods.extend([f"https://parsinger.ru/html/{item.find('a')['href']}" for item in
                       Connect(f"https://parsinger.ru/html/{link}").get_soup().find_all('div', 'item')])
 
+for product in all_goods:
+    soup = Connect(product).get_soup()
+    count = int(re.findall(r'\d+', soup.find('span', id='in_stock').text)[0])
+    price = int(re.findall(r'\d+', soup.find('span', id='price').text)[0])
+    total_sum += count * price
+
+print(total_sum)
