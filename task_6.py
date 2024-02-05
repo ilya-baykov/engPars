@@ -12,4 +12,14 @@ raw_bold_digit = [bold.find_all('b') for bold in soup.find_all('tr')]
 for line in raw_bold_digit:
     for elem in line:
         bold_sum += float(elem.text)
-print(round(bold_sum, 3))
+
+"""
+    Собрать числа, которые выделены в зеленой ячейке 
+    и суммировать их
+"""
+
+url_2 = 'https://parsinger.ru/table/4/index.html'
+
+connect2 = Connect(url_2)
+soup_2 = connect2.get_soup()
+green_cell_sum = sum([float(cell.text) for cell in soup_2.find_all('td', class_='green')])
