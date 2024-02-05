@@ -31,7 +31,7 @@ for count_line, tr in enumerate(soup.find_all('tr')[1:], start=1):
     Пример: {'1 column' : 000.000, '2 column' : 000.000, ..., '15 column' : 000.000,}
     
 """
-result_dict = {}
+# Формирую список всех элементов
 all_elems = []
 for count, tr in enumerate(soup.find_all("tr")):
     if count == 0:
@@ -41,8 +41,11 @@ for count, tr in enumerate(soup.find_all("tr")):
         td = tr.find_all('td')
         all_elems.append(td)
 
-print(all_elems)
+# Прохожу по столбцам среди матрицы всех элементов и создаю результирующий словарь
+result_dict = {}
 for column in range(len(all_elems[0])):
-    for line in range(len(all_elems)):
-        print(all_elems[line][column])
-    print()
+    result_dict[all_elems[0][column].text] = 0
+    for line in range(1, len(all_elems)):
+        result_dict[all_elems[0][column].text] += float(all_elems[line][column].text)
+    result_dict[all_elems[0][column].text] = round(result_dict[all_elems[0][column].text], 3)
+
