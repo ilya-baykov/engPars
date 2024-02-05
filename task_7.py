@@ -31,11 +31,18 @@ for count_line, tr in enumerate(soup.find_all('tr')[1:], start=1):
     Пример: {'1 column' : 000.000, '2 column' : 000.000, ..., '15 column' : 000.000,}
     
 """
-
+result_dict = {}
+all_elems = []
 for count, tr in enumerate(soup.find_all("tr")):
     if count == 0:
-        print(tr.find_all('th'))
+        th = tr.find_all('th')
+        all_elems.append(th)
     else:
-        current_td = tr.find_all('td')
-        print(current_td)
+        td = tr.find_all('td')
+        all_elems.append(td)
+
+print(all_elems)
+for column in range(len(all_elems[0])):
+    for line in range(len(all_elems)):
+        print(all_elems[line][column])
     print()
